@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Tic_Tac_Toe
 {
+    static int location;
     static char playerChoice=' ';
     static char computerChoice =' ';
-
 
     public static char[] CreateBoard()
     {
@@ -30,8 +30,7 @@ public class Tic_Tac_Toe
         Scanner s=new Scanner(System.in);
         System.out.println("Enter the Choice of symbol as X or O :" );
         char userSelect=s.next().charAt(0);
-        //String computerChoice ="";
-        //String userChoice="";
+
         if (userSelect == 'X' || userSelect == 'x' )
         {
             computerChoice='O';
@@ -40,34 +39,54 @@ public class Tic_Tac_Toe
         {
             computerChoice='X';
             playerChoice ='O';
-        }else{
+        }else
+        {
             System.out.println("Invalid Selection");
         }
 
     }
-    public static void makeMove(char[] board, char playerChoice){
+    public static void makeMove(char[] board, char playerChoice)
+    {
         Scanner s=new Scanner(System.in);
         System.out.println("Enter location between 1 to 9" );
-        int location=s.nextInt();
-        if (0 < location && location < 10 ) {
-            if (board[location] == ' ') {
+        location=s.nextInt();
+        if (0 < location && location < 10 )
+        {
+            if (board[location] == ' ')
+            {
                 board[location]=playerChoice;
             }
-        }else {
+        }else
+        {
             System.out.println("Invalid Location: Try Again");
             DisplayBoard(board);
             makeMove(board, playerChoice);
         }
     }
-
-    public static void main(String[] args)
+    public static int Toss()
     {
-        System.out.println("--------Welcome To TicTacToe Game----------");
+        int flipToss=(int) Math.floor((Math.random()*10)%2);
+        if (flipToss == 0)
+        {
+            System.out.println("Player chance to play First");
+        }else
+        {
+            System.out.println("Computer chance to play Second");
+        }
+        return flipToss;
+    }
+
+    public static void main(String[] darsh)
+    {
         char[] board =CreateBoard();
+        Toss();
         MakeChoice();
         System.out.println("Player selection is:"+playerChoice+"\n"+"Computer Selection is:"+computerChoice);
+
         DisplayBoard(board);
         makeMove(board, playerChoice);
         DisplayBoard(board);
+
     }
+
 }
