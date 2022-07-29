@@ -7,7 +7,8 @@ public class Tic_Tac_Toe
     static char playerChoice=' ';
     static char computerChoice =' ';
     static int count=0;
-    static char[] board = CreateBoard();
+    static int currentPlayer;
+    static char[] board =CreateBoard();
 
     public static char[] CreateBoard()
     {
@@ -30,44 +31,70 @@ public class Tic_Tac_Toe
     }
     public static void MakeChoice()
     {
-        Scanner s=new Scanner(System.in);
-        System.out.println("Enter the Choice of symbol as X or O :" );
-        char userSelect=s.next().charAt(0);
-
-        if (userSelect == 'X' || userSelect == 'x' )
+        if (currentPlayer == 0)
         {
-            computerChoice='O';
-            playerChoice ='X';
-        }
-        else if(userSelect == 'O' || userSelect == 'o' )
-        {
-            computerChoice='X';
-            playerChoice ='O';
-        }
-        else
-        {
-            System.out.println("Invalid Selection");
+            int computerSelect=(int) Math.floor((Math.random()*10)%2);
+            if (computerSelect == 0)
+            {
+                computerChoice='O';
+                playerChoice ='X';
+            }else {
+                computerChoice='X';
+                playerChoice ='O';
+            }
+        }else{
+            Scanner s=new Scanner(System.in);
+            System.out.println("Enter the Choice of symbol as X or O :" );
+            char userSelect=s.next().charAt(0);
+            if (userSelect == 'X' || userSelect == 'x' )
+            {
+                computerChoice='O';
+                playerChoice ='X';
+            }else if(userSelect == 'O' || userSelect == 'o' )
+            {
+                computerChoice='X';
+                playerChoice ='O';
+            }else{
+                System.out.println("Invalid Selection");
+            }
         }
     }
 
-    public static void makeMove(char[] board, char playerChoice)
+    public static void makeMove(char[] board, char playerChoice,char computerChoice)
     {
-        Scanner s=new Scanner(System.in);
-        System.out.println("Enter location between 1 to 9" );
-        location=s.nextInt();
-        if (0 < location && location < 10 )
+        if(currentPlayer==1)
         {
-            if (board[location] == ' ')
+            Scanner s=new Scanner(System.in);
+            System.out.println("Enter location between 1 to 9" );
+            location=s.nextInt();
+            if (0 < location && location < 10 )
             {
-                board[location]=playerChoice;
+                if (board[location] == ' ')
+                {
+                    board[location]=playerChoice;
+                }
+            }else
+            {
+                System.out.println("Invalid Location: Try Again");
+                DisplayBoard(board);
+                makeMove(board, playerChoice,computerChoice);
+            }
+        }else{
+            location=(int) Math.floor((Math.random()*9)+1);
+            if (0 < location && location < 10 )
+            {
+                if (board[location] == ' ')
+                {
+                    board[location]=computerChoice;
+                }
+            }else{
+                System.out.println("Invalid Location: Try Again");
+                DisplayBoard(board);
+                makeMove(board, playerChoice,computerChoice);
             }
         }
-        else
-        {
-            System.out.println("Invalid Location: Try Again");
-            DisplayBoard(board);
-            makeMove(board, playerChoice);
-        }
+
+        currentPlayer=currentPlayer+1;
     }
 
     public static int Toss()
@@ -76,9 +103,12 @@ public class Tic_Tac_Toe
         if (flipToss == 0)
         {
             System.out.println("Player chance to play first");
+            currentPlayer=1;
         }else
+
         {
             System.out.println("Computer chance to play first");
+            currentPlayer=0;
         }
         return flipToss;
     }
@@ -132,27 +162,21 @@ public class Tic_Tac_Toe
         {
             System.out.println("Turn Changed");
         }
-
-
     }
-
-    public static void main(String[] darsh)
+    public static void main(String[] args)
     {
+
         System.out.println("--------Welcome To TicTacToe Game----------");
         Toss();
         MakeChoice();
         System.out.println("Player selection is:"+playerChoice+"\n"+"Computer Selection is:"+computerChoice);
         DisplayBoard(board);
-        for(int i=1;i<10;i++)
-        {
-            makeMove(board, playerChoice);
-            DisplayBoard(board);
-            DetermineCondition(playerChoice);
-            if(count==9)
-            {
-                System.out.println("Game is Tie");
-            }
-        }
-    }
+        makeMove(board, playerChoice,computerChoice);
+        DisplayBoard(board);
+        DetermineCondition(playerChoice);
+        if(count==9){
+            System.out.println("Game is Tie");}
 
+        currentPlayer=currentPlayer%2;
+    }
 }
