@@ -156,6 +156,3 @@ public class Tic_Tac_Toe
     }
 
 }
-    after every
-    move the winner or
-    the tie
