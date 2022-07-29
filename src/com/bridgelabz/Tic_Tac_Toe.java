@@ -1,11 +1,13 @@
 package com.bridgelabz;
 import java.util.Scanner;
-
 public class Tic_Tac_Toe
 {
+    static int gameStatus;
     static int location;
     static char playerChoice=' ';
     static char computerChoice =' ';
+    static int count=0;
+    static char[] board = CreateBoard();
 
     public static char[] CreateBoard()
     {
@@ -17,6 +19,7 @@ public class Tic_Tac_Toe
         }
         return board;
     }
+
     public static void DisplayBoard(char[] board)
     {
         System.out.println(board[1]+"|"+board[2]+"|"+board[3]);
@@ -35,16 +38,18 @@ public class Tic_Tac_Toe
         {
             computerChoice='O';
             playerChoice ='X';
-        }else if(userSelect == 'O' || userSelect == 'o' )
+        }
+        else if(userSelect == 'O' || userSelect == 'o' )
         {
             computerChoice='X';
             playerChoice ='O';
-        }else
+        }
+        else
         {
             System.out.println("Invalid Selection");
         }
-
     }
+
     public static void makeMove(char[] board, char playerChoice)
     {
         Scanner s=new Scanner(System.in);
@@ -56,37 +61,101 @@ public class Tic_Tac_Toe
             {
                 board[location]=playerChoice;
             }
-        }else
+        }
+        else
         {
             System.out.println("Invalid Location: Try Again");
             DisplayBoard(board);
             makeMove(board, playerChoice);
         }
     }
+
     public static int Toss()
     {
         int flipToss=(int) Math.floor((Math.random()*10)%2);
         if (flipToss == 0)
         {
-            System.out.println("Player chance to play First");
+            System.out.println("Player chance to play first");
         }else
         {
-            System.out.println("Computer chance to play Second");
+            System.out.println("Computer chance to play first");
         }
         return flipToss;
     }
 
-    public static void main(String[] darsh)
+    public static void 	DetermineCondition(char playerChoice)
     {
-        char[] board =CreateBoard();
-        Toss();
-        MakeChoice();
-        System.out.println("Player selection is:"+playerChoice+"\n"+"Computer Selection is:"+computerChoice);
+        count++;
+        if (board[1] == board[2] && board[2] == board[3] && board[3]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[4] == board[5] && board[5] == board[6] && board[6]==playerChoice)
+        {
+            gameStatus=1;
+        }
 
-        DisplayBoard(board);
-        makeMove(board, playerChoice);
-        DisplayBoard(board);
+        else if (board[7] == board[8] && board[8] == board[9]&& board[9]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[1]==board[4] && board[4] == board [7]&& board[7]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[2]==board[5] && board[5]==board[8]&& board[8]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[3]==board[6] && board[6]==board[9]&& board[9]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[1]==board[5] && board[5]==board[9]&& board[9]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else if (board[3]==board[5] && board[5]==board[7]&& board[7]==playerChoice)
+        {
+            gameStatus=1;
+        }
+        else
+        {
+            gameStatus=0;
+        }
+
+        if(gameStatus==1)
+        {
+            System.out.println("Player Wins");
+        }
+        else
+        {
+            System.out.println("Turn Changed");
+        }
+
 
     }
 
+    public static void main(String[] darsh)
+    {
+        System.out.println("--------Welcome To TicTacToe Game----------");
+        Toss();
+        MakeChoice();
+        System.out.println("Player selection is:"+playerChoice+"\n"+"Computer Selection is:"+computerChoice);
+        DisplayBoard(board);
+        for(int i=1;i<10;i++)
+        {
+            makeMove(board, playerChoice);
+            DisplayBoard(board);
+            DetermineCondition(playerChoice);
+            if(count==9)
+            {
+                System.out.println("Game is Tie");
+            }
+        }
+    }
+
 }
+    after every
+    move the winner or
+    the tie
