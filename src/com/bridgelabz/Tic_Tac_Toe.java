@@ -1,11 +1,12 @@
 package com.bridgelabz;
 import java.util.Scanner;
-public class Tic_Tac_Toe
+public class Tic_Tac_Toe implements Tic_Tac_Toe_Interface
 {
     public char computerChoice;
     public char userChoice;
     public int counter = 0;
     public char[] board;
+
 
     public char[] createBoard()
     {
@@ -24,7 +25,8 @@ public class Tic_Tac_Toe
         System.out.println("enter what you want X or O ");
         char player = obj.next().charAt(0);
         char computer = ' ';
-        if (player == 'X' || player == 'x') {
+        if (player == 'X' || player == 'x')
+        {
             computerChoice = 'O';
             userChoice = 'X';
         } else if (player == 'O' || player == 'o')
@@ -38,7 +40,7 @@ public class Tic_Tac_Toe
         System.out.println("player is " + userChoice + " " + "computer is " + computerChoice);
     }
 
-
+    //display board
     public static void displayBoard(char[] board)
     {
         System.out.println(board[1] + "|" + board[2] + "|" + board[3]);
@@ -59,7 +61,6 @@ public class Tic_Tac_Toe
         return false;
     }
 
-
     public void makeUserMove()
     {
         Scanner obj = new Scanner(System.in);
@@ -70,7 +71,8 @@ public class Tic_Tac_Toe
             board[location] = userChoice;
             counter++;
             checkGameStatus("User");
-        } else {
+        } else
+        {
             System.out.println("Sorry you have selected the wrong position try again");
             if (counter <= 9) makeUserMove();
             else return;
@@ -91,7 +93,8 @@ public class Tic_Tac_Toe
             return;
         }
         bestmove = computerBlockMove();
-        if (bestmove != 0) {
+        if (bestmove != 0)
+        {
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -99,7 +102,8 @@ public class Tic_Tac_Toe
             return;
         }
         bestmove = getCorner();
-        if (bestmove != 0){
+        if (bestmove != 0)
+        {
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -107,8 +111,7 @@ public class Tic_Tac_Toe
             return;
         }
         bestmove = getCenter();
-        if (bestmove != 0)
-        {
+        if (bestmove != 0) {
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -123,7 +126,8 @@ public class Tic_Tac_Toe
                 System.out.println(move);
                 counter++;
                 checkGameStatus("Computer");
-            } else {
+            } else
+            {
                 if (counter <= 9) makeComputerMove();
                 else return;
             }
@@ -134,10 +138,12 @@ public class Tic_Tac_Toe
     public static boolean tossToBegin()
     {
         int toss = (int) Math.floor(Math.random() * 10) % 2;
-        if (toss == 0) {
+        if (toss == 0)
+        {
             System.out.println("Player its your turn to play");
             return false;
-        } else {
+        } else
+        {
             System.out.println("computer it's your turn to play");
             return true;
         }
@@ -155,6 +161,7 @@ public class Tic_Tac_Toe
         return (a == b) && a == computerChoice;
     }
 
+
     public int computerWinMove()
     {
         for (int i = 1; i < 10; i = i + 3)
@@ -164,8 +171,7 @@ public class Tic_Tac_Toe
                 return i + 2;
             }
         }
-        for (int i = 1; i < 10; i = i + 3)
-        {
+        for (int i = 1; i < 10; i = i + 3) {
             if (twoEqual(board[i], board[i + 2]) && board[i + 1] == ' ')
             {
                 return i + 1;
@@ -207,7 +213,7 @@ public class Tic_Tac_Toe
         return (a == b) && a == userChoice;
     }
 
-
+    //check if computer can block user
     public int computerBlockMove()
     {
         for (int i = 1; i < 10; i = i + 3)
@@ -217,8 +223,7 @@ public class Tic_Tac_Toe
                 return i + 2;
             }
         }
-        for (int i = 1; i < 10; i = i + 3)
-        {
+        for (int i = 1; i < 10; i = i + 3) {
             if (checkToBlock(board[i], board[i + 2]) && board[i + 1] == ' ')
             {
                 return i + 1;
@@ -255,6 +260,7 @@ public class Tic_Tac_Toe
         return 0;
     }
 
+
     public int getCorner()
     {
         if (board[1] == ' ') return 1;
@@ -263,9 +269,10 @@ public class Tic_Tac_Toe
         else if (board[9] == ' ') return 9;
         return 0;
     }
+
     public int getCenter()
     {
-        if (board[5]==' ') return 5;
+        if (board[5] == ' ') return 5;
         return 0;
     }
 
@@ -273,8 +280,8 @@ public class Tic_Tac_Toe
     public void checkGameStatus(String key)
     {
         displayBoard(board);
-        // System.out.println(counter);
-        if (counter <= 9) {
+        if (counter <= 9)
+        {
             for (int i = 1; i < 10; i = i + 3)
             {
                 if (allEqual(board[i], board[i + 1], board[i + 2]) && board[i] != ' ')
@@ -309,12 +316,20 @@ public class Tic_Tac_Toe
 
     public static void main(String[] args)
     {
-        int gamestatus = 0;
-        Tic_Tac_Toe game = new Tic_Tac_Toe();
-        System.out.println("--------Welcome To TicTacToe Game----------");
-        char[] board = game.createBoard();
-        game.makeChoice();
-        if (tossToBegin()) game.makeComputerMove();
-        else game.makeUserMove();
+        Scanner scan = new Scanner(System.in);
+        boolean gamestatus = true;
+        while (gamestatus)
+        {
+            Tic_Tac_Toe game = new Tic_Tac_Toe();
+            System.out.println("--------Welcome To TicTacToe Game----------");
+            char[] board = game.createBoard();
+            game.makeChoice();
+            if (tossToBegin()) game.makeComputerMove();
+            else game.makeUserMove();
+            System.out.println("Want to play again Y or N");
+            char playAgain = scan.next().charAt(0);
+            if (playAgain=='n'||playAgain=='N') gamestatus=false;
+            System.out.println("Thank You");
+        }
     }
 }
