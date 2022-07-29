@@ -7,7 +7,6 @@ public class Tic_Tac_Toe
     public int counter = 0;
     public char[] board;
 
-
     public char[] createBoard()
     {
         board = new char[10];
@@ -25,15 +24,15 @@ public class Tic_Tac_Toe
         System.out.println("enter what you want X or O ");
         char player = obj.next().charAt(0);
         char computer = ' ';
-        if (player == 'X' || player == 'x')
-        {
+        if (player == 'X' || player == 'x') {
             computerChoice = 'O';
             userChoice = 'X';
         } else if (player == 'O' || player == 'o')
         {
             computerChoice = 'X';
             userChoice = 'O';
-        } else {
+        } else
+        {
             System.out.println("invalid");
         }
         System.out.println("player is " + userChoice + " " + "computer is " + computerChoice);
@@ -49,7 +48,7 @@ public class Tic_Tac_Toe
         System.out.println(board[7] + "|" + board[8] + "|" + board[9]);
     }
 
-
+    //if location is empty and added player value
     public boolean validateMove(int location)
     {
         if (0 < location && location < 10)
@@ -84,8 +83,7 @@ public class Tic_Tac_Toe
         int move = (int) Math.floor(Math.random() * 10) % 9 + 1;
         System.out.println("Wait its computers turn now");
         int bestmove = computerWinMove();
-        if (bestmove != 0)
-        {
+        if (bestmove != 0) {
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -93,8 +91,7 @@ public class Tic_Tac_Toe
             return;
         }
         bestmove = computerBlockMove();
-        if (bestmove != 0)
-        {
+        if (bestmove != 0) {
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -102,8 +99,7 @@ public class Tic_Tac_Toe
             return;
         }
         bestmove = getCorner();
-        if (bestmove != 0)
-        {
+        if (bestmove != 0){
             board[bestmove] = computerChoice;
             System.out.println(bestmove);
             counter++;
@@ -127,42 +123,37 @@ public class Tic_Tac_Toe
                 System.out.println(move);
                 counter++;
                 checkGameStatus("Computer");
-            }
-            else
-            {
+            } else {
                 if (counter <= 9) makeComputerMove();
                 else return;
             }
         }
     }
 
-
+    //who play first
     public static boolean tossToBegin()
     {
         int toss = (int) Math.floor(Math.random() * 10) % 2;
-        if (toss == 0)
-        {
+        if (toss == 0) {
             System.out.println("Player its your turn to play");
             return false;
-        } else
-        {
+        } else {
             System.out.println("computer it's your turn to play");
             return true;
         }
     }
 
-    //check condition if win
+
     public boolean allEqual(int a, int b, int c)
     {
         return (a == c) && (b == c);
     }
 
-    //check condition to win
+
     public boolean twoEqual(char a, char b)
     {
         return (a == b) && a == computerChoice;
     }
-
 
     public int computerWinMove()
     {
@@ -226,7 +217,8 @@ public class Tic_Tac_Toe
                 return i + 2;
             }
         }
-        for (int i = 1; i < 10; i = i + 3) {
+        for (int i = 1; i < 10; i = i + 3)
+        {
             if (checkToBlock(board[i], board[i + 2]) && board[i + 1] == ' ')
             {
                 return i + 1;
@@ -246,7 +238,8 @@ public class Tic_Tac_Toe
                 return i + 6;
             }
         }
-        for (int i = 1; i < 3; i = i + 1) {
+        for (int i = 1; i < 3; i = i + 1)
+        {
             if (checkToBlock(board[i], board[i + 6]) && board[i + 3] == ' ')
             {
                 return i + 3;
@@ -280,7 +273,7 @@ public class Tic_Tac_Toe
     public void checkGameStatus(String key)
     {
         displayBoard(board);
-
+        // System.out.println(counter);
         if (counter <= 9) {
             for (int i = 1; i < 10; i = i + 3)
             {
@@ -290,7 +283,8 @@ public class Tic_Tac_Toe
                     return;
                 }
             }
-            for (int i = 1; i < 3; i = i + 1) {
+            for (int i = 1; i < 3; i = i + 1)
+            {
                 if (allEqual(board[i], board[i + 3], board[i + 6]) && board[i] != ' ')
                 {
                     System.out.println(key + " has won the game");
@@ -313,11 +307,11 @@ public class Tic_Tac_Toe
         }
     }
 
-    public static void main(String[] darsh)
+    public static void main(String[] args)
     {
         int gamestatus = 0;
         Tic_Tac_Toe game = new Tic_Tac_Toe();
-        System.out.println("--------Welcome To TicTacToe Game--------");
+        System.out.println("--------Welcome To TicTacToe Game----------");
         char[] board = game.createBoard();
         game.makeChoice();
         if (tossToBegin()) game.makeComputerMove();
